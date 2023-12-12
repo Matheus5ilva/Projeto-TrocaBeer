@@ -1,7 +1,7 @@
 package br.com.trocabeer.domain.model.enums;
 
 public enum StatusTroca {
-  ACEITO("Aceito"), RECUSADO("Recusado"), PENDENTE("Pendente");
+  ACEITO("Aceito"), RECUSADO("Recusado"), PENDENTE("Pendente"), ENTREGUE("Entregue");
 
   private String descricao;
 
