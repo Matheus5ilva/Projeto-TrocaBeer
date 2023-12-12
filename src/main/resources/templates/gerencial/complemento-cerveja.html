@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt_br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{gerencial/fragments/header-admin :: head}"></head>
+
+<body>
+	<div class="wrapper d-flex align-items-stretch">
+		<nav th:replace="~{gerencial/fragments/header-admin :: nav}"></nav>
+		<div id="content" class="p-4 p-md-5 pt-5">
+			<h2 class="mb-4" th:text="${cerveja.nome}"></h2>
+			<form th:action="@{'/cervejas/complemento/' + ${cervejaId}}" method="post"
+				th:object="${complementoDTO}" class="p-3 p-md-4 pt-3">
+
+				<div class="form-row">
+					<div class="form-group col-md-3">
+						<input type="date" id="dataFabricacao" name="dataFabricacao" class="form-control"
+							th:field="*{dataFabricacao}">
+						<label for="dataFabricacao" class="form-label">Data de fabricação* </label>
+						<span class="text-danger" th:if="${#fields.hasErrors('dataFabricacao')}"
+							th:errors="*{dataFabricacao}"></span>
+					</div>
+					<div class="form-group col-md-3">
+						<input type="date" id="dataValidade" name="dataValidade" class="form-control"
+							th:field="*{dataValidade}">
+						<label for="dataFabricacao" class="form-label">Data de validade* </label>
+						<span class="text-danger" th:if="${#fields.hasErrors('dataValidade')}"
+							th:errors="*{dataValidade}"></span>
+					</div>
+					<div class="form-group col-md-3">
+						<input type="number" id="estoque" name="estoque" class="form-control" th:field="*{estoque}">
+						<label class="form-label">Estoque* </label>
+						<span class="text-danger" th:if="${#fields.hasErrors('estoque')}" th:errors="*{estoque}"></span>
+					</div>
+					<div class="form-group col-md-3">
+						<select id="inputTipo" class="form-control" th:field="*{tipoTroca}">
+							<option value="TROCA" th:selected="${tipoTroca}">Troca</option>
+							<option value="APOIO" th:selected="${tipoTroca}">Apoio</option>
+							<option value="TROCA_APOIO" th:selected="${tipoTroca}">Troca/Apoio</option>
+						</select>
+						<label class="form-label">Tipo de troca* </label>
+						<span class="text-danger" th:if="${#fields.hasErrors('tipoTroca')}"
+							th:errors="*{tipoTroca}"></span>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-outline-success mb-3">Salvar</button>
+			</form>
+		</div>
+	</div>
+	<div th:replace="~{gerencial/fragments/footer-admin :: footer}"></div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+
+</html>

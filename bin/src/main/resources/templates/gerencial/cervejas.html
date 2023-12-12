@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt_br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{gerencial/fragments/header-admin :: head}"></head>
+
+<body>
+	<nav th:replace="~{gerencial/fragments/header-admin :: nav}"></nav>
+	<section id="titulo-adicionar">
+		<div class="container mb-3">
+			<div class="row">
+				<div class="col-sm-8">
+					<h3>Cervejas</h3>
+				</div>
+				<div class="col-sm-4 d-flex justify-content-end align-items-center">
+					<a th:href="@{/gerencial/cervejas/adicionar}" class="btn btn-outline-success btn-sm rounded-3"><i class="fa fa-plus"
+							aria-hidden="true"></i>
+						Criar Cerveja</a>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section id="lista-cervejarias" class="container-fluid">
+		<div class="container">
+			<div class="table-responsive">
+				<table class="table caption-top">
+					<caption>Lista de mestres-cervejeiros</caption>
+					<thead>
+						<tr>
+							<th scope="col">Nome</th>
+							<th scope="col">Estilo</th>
+							<th scope="col">Ação</th>
+						</tr>
+					</thead>
+					<tbody class="table-group-divider">
+						<tr th:each="cerveja : ${cervejas}">
+							<td th:text="${cerveja.nome}"></td>
+							<td th:text="${cerveja.estilo.nome}"></td>
+							<td>
+								<div class="d-inline-flex">
+									<a class="btn btn-outline-warning me-3 rounded-3" th:href="@{'/gerencial/cervejas/editar/' + ${cerveja.id}}"
+										aria-label="Editar">
+										<i class="fa fa-pencil" aria-hidden="true"></i>
+									</a>
+									<a class="btn btn-outline-danger rounded-3" 
+										aria-label="Delete" onclick="return confirm('Deseja realmente excluir este registro?')" th:href="@{'/gerencial/cervejas/apagar/' + ${cerveja.id}}">
+										<i class="fa fa-trash-o" aria-hidden="true"></i>
+									</a>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+	<div th:replace="~{gerencial/fragments/footer-admin :: footer}"></div>
+</body>
+
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt_br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{gerencial/fragments/header-admin :: head}"></head>
+
+<body>
+    <nav th:replace="~{gerencial/fragments/header-admin :: nav}" ></nav>
+    <section class="container mb-2">
+        <div class="card row justify-content-md-center mb-2">
+            <div class="card-header">
+                <h1>Criar Cerveja</h1>
+            </div>
+            <div class="card-body">
+                <form th:action="@{/gerencial/cervejas/adicionar}" method="post" th:object="${cerveja}" class="row g-3">
+                  <input type="hidden" id="usuarioId" name="usuarioId" th:field="*{usuario.id}" th:value="${usuario.id}">
+                    <div class="col-md-8">
+                        <label for="nome" class="form-label">Nome da cerveja:</label>
+                        <input type="text" id="nome" name="nome" class="form-control" th:field="*{nome}">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="estilo" class="form-label">Estilo:</label>
+                        <select id="estilo" name="estilo" class="form-select" th:field="*{estilo.id}">
+                            <option value="">Selecione um estilo</option>
+                            <option th:each="estilo : ${estilos}" th:value="${estilo.id}" th:text="${estilo.nome}"></option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Volume:</label>
+                        <input type="text" class="form-control" th:field="*{descricaoTecnica.volume}">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Coloração:</label>
+                        <input type="text" class="form-control" th:field="*{descricaoTecnica.coloracao}">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Amargor:</label>
+                        <input type="text" class="form-control" th:field="*{descricaoTecnica.amargor}">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Teor Alcoólico:</label>
+                        <input type="text" class="form-control" th:field="*{descricaoTecnica.teorAlcoolico}">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Temperatura Ideal:</label>
+                        <input type="text" class="form-control" th:field="*{descricaoTecnica.temperaturaIdeal}">
+                    </div>
+
+                    <div class="col-12">
+                        <label for="ativo" class="form-check-label">Ativo:</label>
+                        <input type="checkbox" id="ativo" name="ativo" class="form-check-input" th:field="*{ativo}">
+                    </div>
+
+                    <div class="col-12 mt-3">
+                        <h2>Copo Sugerido:</h2>
+                        <ul id="copoList" class="list-group">
+                            <li th:each="copo, copoStat : *{copoSugerido}" class="list-group-item">
+                                <input type="text" name="copoSugerido" required class="form-control" th:field="*{copoSugerido[__${copoStat.index}__]}">
+                                <button type="button" onclick="removeCopo(this)" class="btn btn-danger">Remover</button>
+                            </li>
+                        </ul>
+                        <button type="button" onclick="addCopo()" class="btn btn-primary mt-3">Adicionar Copo</button>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                        <h2>Comida Harmonizada:</h2>
+                        <ul id="comidaList" class="list-group">
+                            <li th:each="comida, comidaStat : *{comidaHarmonizado}" class="list-group-item">
+                                <input type="text" name="comidaHarmonizado" required class="form-control" th:field="*{comidaHarmonizado[__${comidaStat.index}__]}">
+                                <button type="button" onclick="removeComida(this)" class="btn btn-danger">Remover</button>
+                            </li>
+                        </ul>
+                        <button type="button" onclick="addComida()" class="btn btn-primary mt-3">Adicionar Harmonização</button>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                        <button type="submit" class="btn btn-success">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <div th:replace="~{gerencial/fragments/footer-admin :: footer}"></div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        function addCopo() {
+            var copoList = document.getElementById("copoList");
+            var newItem = document.createElement("li");
+            newItem.classList.add("list-group-item");
+            newItem.innerHTML = '<input type="text" name="copoSugerido" required class="form-control">';
+            newItem.innerHTML += '<button type="button" onclick="removeCopo(this)" class="btn btn-danger">Remover</button>';
+            copoList.appendChild(newItem);
+        }
+
+        function addComida() {
+            var comidaList = document.getElementById("comidaList");
+            var newItem = document.createElement("li");
+            newItem.classList.add("list-group-item");
+            newItem.innerHTML = '<input type="text" name="comidaHarmonizado" required class="form-control">';
+            newItem.innerHTML += '<button type="button" onclick="removeComida(this)" class="btn btn-danger">Remover</button>';
+            comidaList.appendChild(newItem);
+        }
+
+        function removeCopo(btn) {
+            var li = btn.parentNode;
+            li.parentNode.removeChild(li);
+        }
+
+        function removeComida(btn) {
+            var li = btn.parentNode;
+            li.parentNode.removeChild(li);
+        }
+    </script>
+</body>
+
+</html>

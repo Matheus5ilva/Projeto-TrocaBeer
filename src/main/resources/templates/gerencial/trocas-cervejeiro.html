@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="pt_br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{gerencial/fragments/header-admin :: head}"></head>
+
+<body>
+	<div class="wrapper d-flex align-items-stretch">
+		<nav th:replace="~{gerencial/fragments/header-admin :: nav}"></nav>
+		<div id="content" class="p-4 p-md-5 pt-5">
+			<h2 class="mb-4">Trocas</h2>
+			<div class="table-responsive">
+				<table class="table caption-top">
+					<caption>Lista de Trocas</caption>
+					<thead>
+						<tr>
+							<th scope="col">Cerveja</th>
+							<th scope="col">Mestre Cervejeiro</th>
+							<th scope="col">Data Solicitação</th>
+							<th scope="col">Quantidade</th>
+							<th scope="col">Tipo</th>
+							<th scope="col">Status da Troca</th>
+						</tr>
+					</thead>
+					<tbody class="table-group-divider">
+						<tr th:each="troca : ${trocas}">
+							<td th:text="${troca.cervejaNome}"></td>
+							<td><a data-toggle="modal" th:attr="data-target='#exampleModalCenter_'+${troca.id }"
+									th:href="@{'#exampleModalCenter_'+ ${troca.id}}"
+									th:text="${troca.mestreCervejeiro.nome}"></a></td>
+							<td th:text="${#dates.format(troca.dataSolicitado, 'dd/MM/yyyy')}"></td>
+							<td th:text="${#numbers.formatDecimal(troca.quantidadeTroca, 2, 'COMMA', 2, 'POINT')}"></td>
+							<td th:text="${troca.tipoTroca.descricao}"></td>
+							<td th:text="${troca.status.descricao}"></td>
+							<div class="modal fade" th:id="exampleModalCenter_ + ${troca.id}" tabindex="-1"
+								role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLongTitle"
+												th:text="${troca.mestreCervejeiro.nome}"></h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<div class="form-row">
+												<div class="col-md-12">
+													<label style="font-size: 14px;"><strong>Endereço: </strong><span
+															th:text="${troca.mestreCervejeiro.endereco.cidade.nome}"></span>-<span
+															th:text="${troca.mestreCervejeiro.endereco.cidade.estado.sigla}"></span></label>
+												</div>
+
+												<div class="col-md-12">
+													<label style="font-size: 15px;"><strong>Email: </strong><span
+															th:text="${troca.mestreCervejeiro.email}"></span></label>
+												</div>
+												<div class="col-md-12">
+													<label style="font-size: 15px;"><strong>Telefone: </strong><span
+															th:text="${troca.mestreCervejeiro.telefone}"></span></label>
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</tr>
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div th:replace="~{gerencial/fragments/footer-admin :: footer}"></div>
+	<script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+</body>
+
+</html>

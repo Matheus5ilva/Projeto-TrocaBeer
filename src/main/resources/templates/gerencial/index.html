@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="pt_br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{gerencial/fragments/header-admin :: head}"></head>
+
+<body>
+	<div class="wrapper d-flex align-items-stretch">
+		<nav th:replace="~{gerencial/fragments/header-admin :: nav}"></nav>
+		<div id="content" class="p-5 p-md-5 pt-5">
+			<h2 class="mb-4">Bem-Vindo <span th:text="${usuario.nome}"></span></h2>
+			<div class="card-deck" th:if="${usuario.tipoPessoa.descricao == 'Mestre Cervejeiro'}">
+				<div class="card text-center">
+					<div class="card-body">
+						<h5 class="card-title">N° de cerveja cadastrada</h5>
+						<p class="card-text" th:text="${relatorioDTO.numeroCerveja}"></p>
+					</div>
+				</div>
+				<div class="card text-center">
+					<div class="card-body">
+						<h5 class="card-title">N° de trocas</h5>
+						<p class="card-text" th:text="${relatorioDTO.numeroTroca}"></p>
+					</div>
+				</div>
+				<div class="card text-center">
+					<div class="card-body">
+						<h5 class="card-title">N° de trocas pendentes</h5>
+						<p class="card-text" th:text="${relatorioDTO.numeroTrocaPendente}"></p>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<h4 class="mb-4">Cervejas disponíveis em <span th:text="${endereco}"></span></h4>
+			<form th:action="@{/pesquisa}" method="post" th:object="${pesquisaDTO}" class="form-row mb-3">
+				<div class="col-md-4">
+					<input type="text" class="form-control" id="inputCerveja" th:field="*{nome}">
+					<label for="inputMestreCervejeiro" style="font-size: 14px;">Mestre-Cevejeiro </label>
+				</div>
+				<div class="col-md-4">
+					<select id="estilo" name="estilo" class="form-control" th:field="*{estilo.id}">
+						<option value="">Selecione um estilo</option>
+						<option th:each="estilo : ${estilos}" th:value="${estilo.id}" th:text="${estilo.nome}">
+						</option>
+					</select>
+					<label for="inputMestreCervejeiro" style="font-size: 14px;">Estilo </label>
+				</div>
+				<div class="col-md-4">
+					<button type="submit" class="btn btn-outline-warning">Pesquisar</button>
+				</div>
+				<div th:if="${#fields.hasErrors('estilo')}" th:errors="*{estilo}"
+					class="alert alert-dark text-center col-md-12">
+
+				</div>
+			</form>
+
+			<div th:each="cerveja : ${cervejas}">
+
+				<div class="card border-dark mb-3 block">
+					<div class="card-header">
+						<ul class="nav nav-tabs card-header-tabs" id="bologna-list" role="tablist">
+							<li class="nav-item">
+								<a class="nav-link active" th:href="@{'#description_'+ ${cerveja.cervejaId}}" role="tab"
+									aria-controls="description" aria-selected="true">Cerveja</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" th:href="@{'#history_'+ ${cerveja.cervejaId}}" role="tab"
+									aria-controls="history" aria-selected="false">Informações
+									Técnicas</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" th:href="@{'#deals_'+ ${cerveja.cervejaId}}" role="tab"
+									aria-controls="deals" aria-selected="false">Mestre
+									Cervejeiro</a>
+							</li>
+						</ul>
+					</div>
+					<div class="card-body">
+						<h5 class="card-title text-dark" th:text="${cerveja.nome}"></h5>
+						<label style="font-size: 15px;"><strong>Estilo: </strong><span
+								th:text="${cerveja.estilo.nome}"></span></label>
+						<div class="tab-content mt-3">
+							<div class="tab-pane active" th:id="description_ + ${cerveja.cervejaId}" role="tabpanel">
+								<form th:action="@{'/troca'}" method="post" th:object="${trocaDTO}"
+									th:id="'form_' + ${cerveja.cervejaId}" class="form-row">
+									<input type="hidden" id="cerveja" name="cerveja" class="form-control"
+										th:value="${cerveja.cervejaId}" />
+									<input type="hidden" id="complemento" name="complemento" class="form-control"
+										th:value="${cerveja.complemento.id}" />
+									<div class="col-md-6">
+										<input type="number" class="form-control" id="quantidadeProposta"
+											th:field="*{quantidadeProposta}" />
+
+										<label for="inputQuantidade" style="font-size: 14px;">Quantidade:* </label>
+										<span
+											th:if="${#fields.hasErrors('quantidadeProposta') && trocaDTO.cerveja.id == cerveja.cervejaId}"
+											th:errors="*{quantidadeProposta}" class="text-danger"></span>
+									</div>
+									<div class="col-md-6">
+										<button type="submit" class="btn btn-outline-warning">Fazer Proposta</button>
+									</div>
+								</form>
+							</div>
+
+							<div class="tab-pane" th:id="history_ + ${cerveja.cervejaId}" role="tabpanel"
+								aria-labelledby="history-tab">
+								<div class="form-row">
+									<div class="col-md-3">
+										<label style="font-size: 15px;"><strong>Volume: </strong><span
+												th:text="${cerveja.descricaoTecnica.volume}"></span></label>
+									</div>
+									<div class="col-md-3">
+										<label style="font-size: 14px;"><strong>Coloração: </strong><span
+												th:text="${cerveja.descricaoTecnica.coloracao}"></span></label>
+									</div>
+									<div class="col-md-3">
+										<label style="font-size: 14px;"><strong>Amargor: </strong><span
+												th:text="${cerveja.descricaoTecnica.amargor}"></span></label>
+									</div>
+
+									<div class="col-md-3">
+										<label style="font-size: 14px;"><strong>Teor Alcoolico: </strong><span
+												th:text="${cerveja.descricaoTecnica.teorAlcoolico}"></span>%</label>
+									</div>
+
+								</div>
+								<div class="form-row">
+									<div class="col-md-3">
+										<label style="font-size: 14px;"><strong>Teperatura Ideal: </strong> <span
+												th:text="${cerveja.descricaoTecnica.temperaturaIdeal}"></span>
+											°C </label>
+									</div>
+									<div class="col-md-4">
+										<label style="font-size: 14px;"><strong>Copo Sugerido:</strong>
+											<span th:each="copo, iterStat : ${cerveja.copoSugerido}">
+												<span th:if="${!iterStat.first}"> - </span>
+												<span th:text="${copo}"></span>
+											</span>
+										</label>
+									</div>
+
+									<div class="col-md-4">
+										<label style="font-size: 14px;"><strong>Harmonização: </strong>
+											<span th:each="comida, iterStat : ${cerveja.comidaHarmonizada}">
+												<span th:if="${!iterStat.first}"> - </span>
+												<span th:text="${comida}"></span>
+											</span>
+										</label>
+									</div>
+
+								</div>
+								<div class="form-row">
+									<div class="col-md-4">
+										<label style="font-size: 14px; font-weight: bold;">Fabricação: <span
+												th:text="${#dates.format(cerveja.complemento.dataFabricacao, 'dd/MM/yyyy')}"></span>
+										</label>
+									</div>
+									<div class="col-md-4">
+										<label style="font-size: 14px; color: red;  font-weight: bold;">Validade: <span
+												th:text="${#dates.format(cerveja.complemento.dataValidade, 'dd/MM/yyyy')}"></span>
+										</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="tab-pane" th:id="deals_ + ${cerveja.cervejaId}" role="tabpanel"
+								aria-labelledby="deals-tab">
+								<div class="form-row">
+									<div class="col-md-6">
+										<label style="font-size: 15px;"><strong>Nome: </strong><span
+												th:text="${cerveja.usuario.nome}"></span></label>
+									</div>
+									<div class="col-md-6">
+										<label style="font-size: 14px;"><strong>Endereço: </strong><span
+												th:text="${endereco}"></span></label>
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="col-md-6">
+										<label style="font-size: 14px;"><strong>E-mail: </strong><span
+												th:text="${cerveja.usuario.email}"></span></label>
+									</div>
+									<div class="col-md-6">
+										<label style="font-size: 14px;"><strong>Telefone: </strong><span
+												th:text="${cerveja.usuario.telefone}"></span></label>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+	<div th:replace="~{gerencial/fragments/footer-admin :: footer}"></div>
+
+	<script>
+		$(document).ready(function () {
+			$(".block").slice(0, 5).show();
+			if ($(".block:hidden").length != 0) {
+				$("#load").show();
+			}
+			$("#load").on("click", function (e) {
+				e.preventDefault();
+				$(".block:hidden").slice(0, 5).slideDown();
+				if ($(".block:hidden").length == 0) {
+					$("#load").text("Não há mais itens para carregar").fadeOut("slow");
+				}
+			});
+			$("#scrollTop").on("click", function () {
+				$("html, body").animate({scrollTop: 0}, "slow");
+			});
+		})
+
+		$('#bologna-list a').on('click', function (e) {
+			e.preventDefault()
+			$(this).tab('show')
+		})
+	</script>
+</body>
+
+</html>

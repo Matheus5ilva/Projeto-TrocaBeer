@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt_br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{gerencial/fragments/header-admin :: head}"></head>
+
+<body>
+	<div class="wrapper d-flex align-items-stretch">
+		<nav th:replace="~{gerencial/fragments/header-admin :: nav}"></nav>
+		<div id="content" class="p-4 p-md-5 pt-5">
+			<h2 class="mb-4">Editar cerveja - <span th:text="${cervejaDTO.nome}"></span></h2>
+			<form th:action="@{'/cervejas/editar/' + ${cervejaId}}" method="post" th:object="${cervejaDTO}"
+				class="p-3 p-md-4 pt-3">
+				<div class="form-row">
+					<div class="form-group col-md-8">
+						<input type="text" id="nome" name="nome" class="form-control" th:field="*{nome}">
+						<label for="inputNome" class="form-label">Nome da cerveja* </label>
+						<span class="text-danger" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+					</div>
+					<div class="form-group col-md-4">
+						<select id="estilo" name="estilo" class="form-control" th:field="*{estilo.id}">
+							<option value="">Selecione um estilo</option>
+							<option th:each="estilo : ${estilos}" th:value="${estilo.id}" th:text="${estilo.nome}">
+							</option>
+						</select>
+						<label for="inputEstilo" class="form-label">Estilo* </label>
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group col-md-4">
+						<input type="text" class="form-control" th:field="*{volume}">
+						<label for="inputNome" class="form-label">Volume* </label>
+						<span class="text-danger" th:if="${#fields.hasErrors('volume')}" th:errors="*{volume}"></span>
+					</div>
+					<div class="form-group col-md-4">
+						<input type="text" class="form-control" th:field="*{coloracao}">
+						<label class="form-label">Coloração* </label>
+						<span class="text-danger" th:if="${#fields.hasErrors('coloracao')}"
+							th:errors="*{coloracao}"></span>
+					</div>
+					<div class="form-group col-md-4">
+						<input type="text" class="form-control" th:field="*{amargor}">
+						<label class="form-label">Amargor* </label>
+						<span class="text-danger" th:if="${#fields.hasErrors('amargor')}" th:errors="*{amargor}"></span>
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group col-md-4">
+						<input type="text" class="form-control" th:field="*{teorAlcoolico}" th:placeholder="'0.00'" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+						<label class="form-label">Teor Alcoólico* </label>
+						<span class="text-danger" th:if="${#fields.hasErrors('teorAlcoolico')}"
+							th:errors="*{teorAlcoolico}"></span>
+					</div>
+					<div class="form-group col-md-4">
+						<input type="text" class="form-control" th:field="*{temperaturaIdeal}" th:placeholder="'0.00'" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+						<label class="form-label">Temperatura Ideal* </label>
+						<span class="text-danger" th:if="${#fields.hasErrors('temperaturaIdeal')}"
+							th:errors="*{temperaturaIdeal}"></span>
+					</div>
+					<div class="form-group col-md-4">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" id="ativo" name="ativo" th:field="*{ativo}">
+							<label class="form-check-label" for="defaultCheck1">
+								Ativo
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="form-row pt-2">
+					<div class="form-group col-md-12">
+						<h6 class="form-label">Comida Harmonizada </h6>
+						<button type="button" onclick="addComida()" class="btn btn-outline-success btn-sm rounded-3"><i
+								class="fa fa-plus" aria-hidden="true"></i> Adicionar Harmonização</button>
+						<ul id="comidaList" class="list-group">
+							<li th:each="comida, comidaStat : *{comidaHarmonizada}" class="form-row">
+								<input type="text" name="comidaHarmonizado" class="form-control col-md-10"
+									th:field="*{comidaHarmonizada[__${comidaStat.index}__]}">
+								<button type="button" onclick="removeComida(this)"
+									class="btn btn-outline-danger rounded-3"><i class="fa fa-trash-o"
+										aria-hidden="true"></i></button>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="form-row pt-2">
+					<div class="form-group col-md-12">
+						<h6 class="form-label">Copo Sugerido </h6>
+						<button type="button" onclick="addCopo()" class="btn btn-outline-success btn-sm rounded-3"><i
+								class="fa fa-plus" aria-hidden="true"></i> Adicionar Copo</button>
+						<ul id="copoList" class="list-group">
+							<li th:each="copo, copoStat : *{copoSugerido}" class="form-row">
+								<input type="text" name="copoSugerido" class="form-control col-md-10"
+									th:field="*{copoSugerido[__${copoStat.index}__]}">
+								<button type="button" onclick="removeCopo(this)"
+									class="btn btn-outline-danger rounded-3"><i class="fa fa-trash-o"
+										aria-hidden="true"></i></button>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-outline-success mb-3">Salvar</button>
+			</form>
+		</div>
+	</div>
+	<div th:replace="~{gerencial/fragments/footer-admin :: footer}"></div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<script>
+		function addCopo() {
+			var copoList = document.getElementById("copoList");
+			var lastItem = copoList.lastElementChild;
+			var lastItemIndex = 0;
+
+			if (lastItem) {
+				// Extrair o índice do último item
+				var lastItemName = lastItem.querySelector('input[type="text"]').name;
+				var regexResult = /\[(\d+)\]/.exec(lastItemName);
+
+				if (regexResult && regexResult.length > 1) {
+					lastItemIndex = parseInt(regexResult[1]) + 1;
+				}
+			}
+
+			var newItem = document.createElement("li");
+			newItem.classList.add("form-row");
+			newItem.innerHTML += '<input type="text" name="copoSugerido[' + lastItemIndex + ']" class="form-control col-md-10">';
+			newItem.innerHTML += '<button type="button" onclick="removeCopo(this)" class="btn btn-outline-danger rounded-3"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
+			copoList.appendChild(newItem);
+		}
+
+
+		function addComida() {
+			var comidaList = document.getElementById("comidaList");
+			var lastItem = comidaList.lastElementChild;
+			var lastItemIndex = 0;
+
+			if (lastItem) {
+				// Extrair o índice do último item
+				var lastItemName = lastItem.querySelector('input[type="text"]').name;
+				var regexResult = /\[(\d+)\]/.exec(lastItemName);
+
+				if (regexResult && regexResult.length > 1) {
+					lastItemIndex = parseInt(regexResult[1]) + 1;
+				}
+			}
+
+			var newItem = document.createElement("li");
+			newItem.classList.add("form-row");
+			newItem.innerHTML += '<input type="text" name="comidaHarmonizada[' + lastItemIndex + ']" class="form-control col-md-10">';
+			newItem.innerHTML += '<button type="button" onclick="removeComida(this)" class="btn btn-outline-danger rounded-3"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
+			comidaList.appendChild(newItem);
+		}
+
+
+		function removeCopo(btn) {
+			var li = btn.parentNode;
+			li.parentNode.removeChild(li);
+		}
+
+		function removeComida(btn) {
+			var li = btn.parentNode;
+			li.parentNode.removeChild(li);
+		}
+	</script>
+</body>
+
+</html>

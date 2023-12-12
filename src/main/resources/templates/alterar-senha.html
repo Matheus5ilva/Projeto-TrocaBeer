@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt_br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Alterar Senha - TrocaBeer</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="icon" type="image/x-icon" th:href="@{img/Trocabeer.ico}" />
+	<link th:href="@{https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900}" rel="stylesheet">
+
+	<link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css}">
+	<link rel="stylesheet" href="app/css/style.css" th:href="@{/app/css/style.css}">
+	<style>
+		@media (min-width: 1280px) {
+			.p-md-4 {
+				padding: 1rem 12.5rem !important;
+			}
+		}
+
+		@media (max-width: 768px) {
+			img {
+				margin: 0 auto;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="wrapper d-flex align-items-stretch">
+		<!-- Page Content  -->
+		<div id="content" class="p-4 p-md-5 pt-5">
+			<div class="row justify-content-md-center">
+				<a th:href="@{/}">
+					<div class="row justify-content-md-center">
+						<img th:src="@{/img/Trocabeer.png}" alt="" class="img-responsive w-50">
+					</div>
+				</a>
+			</div>
+			<div class="row justify-content-md-center">
+				<div class="col-md-auto">
+					<h2 class="mb-4 ">Alterar Senha - <span th:text="${usuario.nome}"></span></h2>
+				</div>
+			</div>
+
+			<form th:action="@{'/alterar-senha?token=' + ${token}}" th:object="${usuarioDTO}" method="post"
+				class="p-3 p-md-4 pt-3">
+
+				<div class="form-row">
+					<div class="form-group col-md-12">
+						<input type="password" class="form-control" id="inputSenha" th:field="*{senha}">
+						<label for="inputSenha" class="form-label">Senha:* </label>
+						<span class="text-danger" th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}"></span>
+					</div>
+					<div class="form-group col-md-12">
+						<input type="password" class="form-control" id="inputConfirmarSenha"
+							th:field="*{confirmarSenha}">
+						<label for="inputConfirmarSenha" class="form-label">Confirmar Senha:* </label>
+						<span class="text-danger" th:if="${#fields.hasErrors('confirmarSenha')}"
+							th:errors="*{confirmarSenha}"></span>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-outline-success mb-3">Salvar</button>
+			</form>
+
+		</div>
+	</div>
+	<div th:replace="~{gerencial/fragments/footer-admin :: footer}"></div>
+	<script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+</body>
+
+</html>

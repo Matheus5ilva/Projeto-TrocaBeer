@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head}"></head>
+<body>
+  <header>
+    <div class="bg-warning text-dark text-center p-1">
+      <a th:href="@{/gerencial}" class="text-dark fw-bold">Acesse a área administrativa!</a>
+    </div>
+    <nav class="navbar navbar-expand-lg bg-black text-dark bg-opacity-25">
+      <div class="container">
+        <a class="navbar-brand titulo-trocabeer-nav" href="index.html">TrocaBeer</a>
+        <span class="navbar-text">
+          <a href="#" class="text-warning" th:text="${endereco}"></a>
+        </span>
+      </div>
+    </nav>
+    <div id="inicio" class="inicio container">
+      <div class="row">
+        <div class="col-sm-12 mb-3 mb-sm-0">
+          <div class="container text-center pb-4">
+            <h3 class="titulo-pessoa">Olá <span class="titulo-pessoa" th:text="${usuario.nome}"></span>!</h3>
+          </div>
+
+        </div>
+        <div class="col-sm-auto container">
+          <div class="card text-bg-dark bg-opacity-50">
+            <div class="card-header">
+              <h3>Buscar Cervejaria/Cerveja</h3>
+            </div>
+            <div class="card-body">
+              <form class="row g-3" th:object="${estilo}" action="categorias.html">
+                <div class="col-auto">
+                  <input type="text" class="form-control" id="inputNome" placeholder="Nome da cervejaria" />
+                </div>
+                <div class="col-auto">
+                  <select id="inputEstilo" class="form-select">
+						<option value="" disabled selected>Selecione um estilo</option>
+						<option th:each="estilo : ${estilos}" th:value="${estilo.id}" th:text="${estilo.nome}"></option>
+					</select>
+                </div>
+                <div class="col-auto">
+                  <button type="submit" class="btn btn-warning mb-3">
+                    Filtrar
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="destaques" class="container mt-3">
+    <div class="trends">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="bbb_container">
+              <h2 class="bbb_title mb-2">Cervejas em destaque para trocas!</h2>
+              <div class="bbb_slider_nav">
+                <div class="bbb_prev bbb_nav"><i class="fas fa-angle-left ml-auto"></i></div>
+                <div class="bbb_next bbb_nav"><i class="fas fa-angle-right ml-auto"></i></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-9">
+            <div class="bbb_slider_container">
+              <div class="owl-carousel owl-theme bbb_slider">
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="mensagem">
+    <div class="container text-center p-5">
+      <h3 class="titulo-trocabeer">
+        TrocaBeer o local correto para você encontrar, trocar ou apoiar um mestre cervejeiro da sua região!
+      </h3>
+  </section>
+  <section id="ultimo-cadastro" class="container mt-2">
+    <div class="trends">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="bbb_container">
+              <h2 class="bbb_title mb-2">Ultimas cervejas adicionadas!</h2>
+              <div class="bbb_slider_nav">
+                <div class="bbb_prev bbb_nav"><i class="fas fa-angle-left ml-auto"></i></div>
+                <div class="bbb_next bbb_nav"><i class="fas fa-angle-right ml-auto"></i></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-9">
+            <div class="bbb_slider_container">
+              <div class="owl-carousel owl-theme bbb_slider">
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="owl-item">
+                  <a href="produto.html">
+                    <div class="card" style="width: auto; border-radius: 18px;">
+                      <img src="close-up-de-um-barman-derramando-cerveja.jpg" class="p-3" alt="">
+                      <div class="card-body">
+                        <p class="card-text">Cervejaria do Matheus</p>
+                        <h5 class="card-title">Cerveja Ipa do Matheus</h5>
+                      </div>
+                      <div class="card-footer text-body-secondary" style="border-radius: 18px;">
+                        Apoiar/Trocar
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div  th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

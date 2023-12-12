@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt_br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{gerencial/fragments/header-admin :: head}"></head>
+
+<body>
+	<div class="wrapper d-flex align-items-stretch">
+		<nav th:replace="~{gerencial/fragments/header-admin :: nav}"></nav>
+		<div id="content" class="p-4 p-md-5 pt-5">
+			<h2 class="mb-4">Suporte</h2>
+			<div class="row">
+				<div class="col-sm-4 d-flex col align-self-end mb-4">
+					<a href="https://wa.me//5538988499084?text=Ainda%20preciso%20de%20ajuda." target="_blank" class="btn btn-outline-success btn-sm rounded-3"><i
+							class="fa fa-whatsapp" aria-hidden="true"></i>
+						Entrar em contato</a>
+				</div>
+			</div>
+			<div class="accordion" id="accordionExample">
+				<div class="form-control" id="headingOne">
+					<h2 class="mb-0">
+						<button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+							data-target="#suporteOne" aria-expanded="true" aria-controls="suporteOne">
+							Cadastro de Apreciador/Mestre-Cervejeiro
+						</button>
+					</h2>
+				</div>
+
+				<div id="suporteOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+					<div class="card">
+						<div class="card-body">
+							<iframe width="560" height="315"
+								src="https://www.youtube.com/embed/zObCCCsCo2I?si=h3EExrH4RQMusgTZ&amp;controls=0"
+								title="YouTube video player" frameborder="0"
+								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+								allowfullscreen></iframe>
+						</div>
+
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+	<div th:replace="~{gerencial/fragments/footer-admin :: footer}"></div>
+	<script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+</body>
+
+</html>

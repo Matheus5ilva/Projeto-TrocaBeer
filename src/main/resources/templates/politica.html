@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt_br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<title>TrocaBeer</title>
+	<link rel="icon" type="image/x-icon" th:href="@{img/Trocabeer.ico}" />
+	<!-- Font Awesome icons (free version)-->
+	<script th:src="@{https://use.fontawesome.com/releases/v6.3.0/js/all.js}" crossorigin="anonymous"></script>
+	<!-- Google fonts-->
+	<link th:href="@{https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700}" rel="stylesheet"
+		type="text/css" />
+	<link th:href="@{https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i}" rel="stylesheet"
+		type="text/css" />
+
+	<!-- Core theme CSS (includes Bootstrap)-->
+	<link rel="stylesheet" href="css/style.css" th:href="@{/css/styles.css}">
+
+</head>
+
+<body id="page-top">
+	<!-- Navigation-->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+		<a class="navbar-brand js-scroll-trigger" th:href="@{/}">
+			<span class="d-block d-lg-none">TrocaBeer</span>
+			<span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2"
+					th:src="@{img/Trocabeer.png}" alt="..." /></span>
+		</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+			aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span
+				class="navbar-toggler-icon"></span></button>
+		<div class="collapse navbar-collapse" id="navbarResponsive">
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link js-scroll-trigger" th:href="@{/}">voltar</a></li>
+				<li class="nav-item"><a class="btn btn-outline-light  mt-4" th:href="@{/login}"
+						style="text-transform:uppercase; font-family: Muli, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;font-weight: 800;">Entrar</a>
+				</li>
+				<li class="nav-item"><a class="js-scroll-trigger btn btn-outline-dark mt-2" th:href="@{/registro}"
+						style="text-transform:uppercase; font-family: Muli, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;font-weight: 800;">Registro</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<!-- Page Content-->
+	<div class="container-fluid p-0">
+		<!-- Experience-->
+		<section class="resume-section" id="sobre">
+			<div class="resume-section-content">
+				<h2 class="mb-5">Política de Privacidade e Cookies</h2>
+				<div class="d-flex flex-column flex-md-row justify-content-between mb-3">
+					<div class="flex-grow-1">
+						<p class="subheading">
+							Bem-vindo ao nosso site! Valorizamos a sua privacidade e queremos garantir que você esteja
+							ciente de como coletamos, usamos e protegemos as suas informações pessoais enquanto você
+							navega e utiliza os nossos serviços online. Esta Política de Privacidade e Cookies é
+							projetada para fornecer a você todas as informações relevantes
+						</p>
+					</div>
+				</div>
+				<div class="d-flex flex-column flex-md-row justify-content-between mb-2">
+					<div class="flex-grow-1">
+						<h4 class="mb-0">1. Coleta de Informações</h4>
+						<div>1.1. Dados Pessoais<br />
+							Recolhemos informações pessoais que você fornece diretamente, como nome, endereço de e-mail,
+							número de telefone, informações de pagamento e outros dados necessários para prestar
+							serviços ou responder a solicitações</div>
+						<div>1.2. Informações de Uso<br />
+							Registramos automaticamente informações sobre como você utiliza o nosso site, incluindo o
+							endereço IP, tipo de dispositivo, navegador, páginas visitadas, data e hora de acesso, entre
+							outros dados semelhantes.</div>
+						<div>1.3. Cookies<br />
+							Utilizamos cookies e tecnologias semelhantes para coletar informações sobre a sua interação
+							com o nosso site. Os cookies são pequenos arquivos de texto armazenados no seu dispositivo.
+							Para obter mais informações sobre como usamos cookies e como você pode gerenciá-los,
+							consulte a nossa Política de Cookies na seção 3.</div>
+
+					</div>
+
+				</div>
+				<div class="d-flex flex-column flex-md-row justify-content-between mb-2">
+					<div class="flex-grow-1">
+						<h4 class="mb-0">2. Uso de Informações</h4>
+						<div>2.1. Prestação de Serviços <br />
+							Utilizamos os seus dados pessoais para fornecer os serviços que você solicitou, como
+							processamento de pedidos, resposta a perguntas e oferecimento de suporte técnico.</div>
+						<div>2.2. Melhorias nos Serviços<br />
+							Analisamos os dados de uso para melhorar a qualidade dos nossos serviços, adaptar o conteúdo
+							às suas preferências e otimizar a experiência do usuário.</div>
+						<div>2.3. Comunicações<br />
+							Podemos utilizar o seu endereço de e-mail para enviar informações importantes sobre
+							atualizações, novos recursos ou alterações na nossa política de privacidade.</div>
+					</div>
+
+				</div>
+				<div class="d-flex flex-column flex-md-row justify-content-between mb-2">
+					<div class="flex-grow-1">
+						<h4 class="mb-0">3. Política de Cookies</h4>
+						<div>3.1. O que são Cookies? <br />
+							Os cookies são pequenos arquivos de texto que são armazenados no seu dispositivo quando você
+							visita o nosso site. Eles são amplamente utilizados para melhorar a experiência do usuário
+							na web.</div>
+						<div>3.1. O que são Cookies?<br />
+							Utilizamos cookies para diversos fins, incluindo análise de tráfego, personalização de
+							conteúdo e anúncios, e para melhorar a segurança do nosso site. Além disso, utilizamos
+							cookies de terceiros para serviços de análise, publicidade e mídias sociais.</div>
+						<div>3.3. Gerenciamento de Cookies<br />
+							Você pode gerenciar as configurações de cookies no seu navegador, permitindo, bloqueando ou
+							excluindo cookies de acordo com as suas preferências. Note que a desativação de cookies pode
+							afetar a funcionalidade do nosso site.</div>
+
+					</div>
+
+				</div>
+				<div class="d-flex flex-column flex-md-row justify-content-between mb-2">
+					<div class="flex-grow-1">
+						<h4 class="mb-0">4. Compartilhamento de Informações</h4>
+						<div>Não vendemos, alugamos ou compartilhamos as suas informações pessoais com terceiros, exceto
+							quando necessário para cumprir obrigações legais ou para fornecer os serviços que você
+							solicitou. Quando utilizamos serviços de terceiros que envolvem o compartilhamento de
+							informações, garantimos que eles mantenham os padrões de privacidade e segurança adequados.
+						</div>
+
+					</div>
+
+				</div>
+				<div class="d-flex flex-column flex-md-row justify-content-between mb-2">
+					<div class="flex-grow-1">
+						<h4 class="mb-0">5. Segurança das Informações</h4>
+						<div>Temos medidas de segurança técnicas, administrativas e físicas em vigor para proteger as
+							suas informações pessoais contra perda, acesso não autorizado, divulgação, alteração ou
+							destruição.
+						</div>
+
+					</div>
+
+				</div>
+				<div class="d-flex flex-column flex-md-row justify-content-between mb-2">
+					<div class="flex-grow-1">
+						<h4 class="mb-0">6. Direitos do Usuário</h4>
+						<div>Você tem o direito de acessar, corrigir, atualizar ou excluir as suas informações pessoais.
+							Além disso, pode optar por não receber comunicações nossas a qualquer momento. Para exercer
+							esses direitos ou se tiver alguma dúvida sobre a nossa política de privacidade, entre em
+							contato conosco através das informações de contato fornecidas no nosso site.
+						</div>
+
+					</div>
+
+				</div>
+				<div class="d-flex flex-column flex-md-row justify-content-between mb-2">
+					<div class="flex-grow-1">
+						<h4 class="mb-0">7. Alterações na Política de Privacidade</h4>
+						<div>Reservamo-nos o direito de atualizar esta política periodicamente para refletir mudanças
+							nas práticas de privacidade. Quando fizermos alterações significativas, notificaremos os
+							usuários através do nosso site ou por outros meios.
+						</div>
+
+					</div>
+
+				</div>
+
+
+
+			</div>
+		</section>
+
+	</div>
+	<!-- Bootstrap core JS-->
+	<script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js}"></script>
+	<!-- Core theme JS-->
+	<script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+	<script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js}"></script>
+
+	<script th:src="@{js/scripts.js}"></script>
+	<script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="pt_br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{gerencial/fragments/header-admin :: head}"></head>
+
+<body>
+	<nav th:replace="~{gerencial/fragments/header-admin :: nav}" ></nav>
+	<section class="container mb-2">
+		<div class="card row justify-content-md-center mb-2">
+			<div class="card-header">
+				<h3>Editar</h3>
+			</div>
+			<form tth:action="@{'/gerencial/usuario/editar/' + ${usuarioId}}" th:object="${usuario}" method="post"
+				class="row g-3">
+				<div class="col-md-8">
+					<label for="inputNome" class="form-label">Nome:</label>
+					<input type="text" class="form-control" id="inputNome" th:field="*{nome}">
+				</div>
+				<div class="col-md-6">
+					<label for="inputEmail" class="form-label">E-mail:</label>
+					<input type="email" class="form-control" id="inputEmail" th:field="*{email}">
+				</div>
+         <div class="col-md-4">
+					<a class="btn btn-outline-warning rounded-3" 
+										aria-label="Alterar Senha" th:href="@{'/gerencial/usuario/editar/' + ${usuario.id} + '/alterar-senha'}">
+										Alterar senha
+									</a>
+				</div>
+				<div class="col-md-8">
+					<label for="inputLogradouro" class="form-label">Logradouro:</label>
+					<input type="text" class="form-control" id="inputLogradouro" th:field="*{endereco.logradouro}">
+				</div>
+				<div class="col-md-4">
+					<label for="inputNumero" class="form-label">Numero:</label>
+					<input type="text" class="form-control" id="inputNumero" th:field="*{endereco.numero}">
+				</div>
+				<div class="col-md-6">
+					<label for="inputComplemento" class="form-label">Complemento:</label>
+					<input type="text" class="form-control" id="inputComplemento" th:field="*{endereco.complemento}">
+				</div>
+				<div class="col-md-6">
+					<label for="inputBairro" class="form-label">Bairro:</label>
+					<input type="text" class="form-control" id="inputBairro" th:field="*{endereco.bairro}">
+				</div>
+				<div class="col-md-6">
+					<label for="inputEstado" class="form-label">Estado:</label>
+					<select id="inputEstado" class="form-select" th:field="*{endereco.cidade.estado.id}">
+						<option th:each="estado : ${estados}" th:value="${estado.id}" th:text="${estado.nome}"></option>
+					</select>
+				</div>
+
+				<div class="col-md-6">
+					<label for="inputCidade" class="form-label">Cidade:</label>
+					<select id="inputCidade" class="form-select" th:field="*{endereco.cidade.id}" disabled>
+						<option value="" disabled selected>Selecione um estado primeiro</option>
+						<!-- Opções de cidade serão preenchidas dinamicamente -->
+					</select>
+				</div>
+				<div class="col-md-4">
+					<label for="inputCep" class="form-label">Cep:</label>
+					<input type="number" class="form-control" id="inputCep" th:field="*{endereco.cep}">
+				</div>
+				<div class="col-md-4">
+					<label for="inputTipo" class="form-label">Tipo:</label>
+					<select id="inputTipo" class="form-select" th:field="*{tipoPessoa}">
+						<option value="MESTRE_CERVEJEIRO" th:selected="${tipoPessoa}">Mestre-Cervejeiro
+						</option>
+            <option value="CERVEJEIRO" th:selected="${tipoPessoa}">Cervejeiro
+						</option>
+					</select>
+				</div>
+				<div class="col-md-4">
+					<label for="inputTelefone" class="form-label">Telefone:</label>
+					<input type="number" class="form-control" id="inputTelefone" th:field="*{telefone}">
+				</div>
+        <div class="col-4">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" id="gridCheck" th:checked="${usuario.ativo}"
+							th:field="*{ativo}">
+						<label class="form-check-label" for="gridCheck">
+							Ativo
+						</label>
+					</div>
+				</div>
+				<div class="col-md-10">
+					<button type="submit" class="btn btn-outline-success mb-3">Salvar</button>
+				</div>
+        <div class="col-md-2">
+					<a class="btn btn-outline-danger rounded-3" 
+										aria-label="Delete" onclick="return confirm('Deseja realmente excluir este registro?')" th:href="@{'/gerencial/usuario/apagar/' + ${usuario.id}}">
+										<i class="fa fa-trash-o" aria-hidden="true"></i>
+									</a>
+				</div>
+			</form>
+		</div>
+	</section>
+	<div th:replace="~{gerencial/fragments/footer-admin :: footer}"></div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			$('#inputEstado').on('change', function () {
+				var estadoId = $(this).val();
+				$.ajax({
+					url: '/ajax/buscarCidadesPorEstado', // Rota para buscar as cidades por estado
+					dataType: 'json',
+					data: {
+						estadoId: estadoId // ID do estado selecionado
+					},
+					success: function (data) {
+						var selectCidade = $('#inputCidade');
+						selectCidade.empty();
+						selectCidade.append('<option value="" disabled selected>Selecione uma cidade</option>');
+						$.each(data, function (index, cidade) {
+							selectCidade.append('<option value="' + cidade.id + '">' + cidade.nome + '</option>');
+						});
+						selectCidade.prop('disabled', false); // Habilita o campo de cidade
+					}
+				});
+			});
+
+			$('#inputEstado').trigger('change'); // Disparar o evento de change no carregamento da página
+		});
+	</script>
+</body>
+
+</html>

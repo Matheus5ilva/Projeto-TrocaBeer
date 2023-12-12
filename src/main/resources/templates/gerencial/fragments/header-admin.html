@@ -1,0 +1,52 @@
+<head th:fragment="head">
+	<title>TrocaBeer - Área Gerencial</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link th:href="@{https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900}" rel="stylesheet">
+	<link rel="icon" type="image/x-icon" th:href="@{img/Trocabeer.ico}" />
+	<link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css}">
+	<link rel="stylesheet" href="app/css/style.css" th:href="@{/app/css/style.css}">
+</head>
+
+<body>
+	<div class="wrapper d-flex align-items-stretch">
+		<nav th:fragment="nav" id="sidebar">
+			<div class="sticky-top">
+				<div class="custom-menu">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary">
+						<i class="fa fa-bars"></i>
+						<span class="sr-only">Toggle Menu</span>
+					</button>
+				</div>
+				<h1><a th:href="@{/home}" class="logo">TrocaBeer</a></h1>
+				<ul class="list-unstyled components mb-5">
+					<li>
+						<a th:href="@{/home}"><span class="fa fa-home mr-3"></span> Página Inicial</a>
+					</li>
+					<li th:if="${usuario.tipoPessoa.descricao == 'Mestre Cervejeiro'}">
+						<a th:href="@{/cervejas}"><span class="fa fa-beer mr-3"></span> Cerveja</a>
+					</li>
+					<li>
+						<a th:href="@{/trocas}"><span class="fa fa-exchange mr-3"></span> Trocas</a>
+					</li>
+					<li>
+						<a th:href="@{/suporte}"><span class="fa fa-question-circle mr-3"></span> Suporte</a>
+					</li>
+					<li class="accordion">
+						<a href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+							aria-controls="collapseOne" class="collapsible">
+							<span class="fa fa-user mr-3"></span> <span th:text="${usuario.nome}"></span>
+						</a>
+						<div id="collapseOne" class="collapse" aria-labelledby="headingOne">
+							<div>
+								<ul class="list-unstyled components">
+									<li><a th:href="@{'/usuario/editar/' + ${usuario.id}}">Editar</a></li>
+									<li><a th:href="@{/logout}">Sair</a></li>
+								</ul>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</nav>

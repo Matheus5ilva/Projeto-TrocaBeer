@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pt_br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{gerencial/fragments/header-admin :: head}"></head>
+
+<body>
+	<nav th:replace="~{gerencial/fragments/header-admin :: nav}" ></nav>
+	<section class="container mb-2">
+		<div class="card row justify-content-md-center mb-2">
+			<div class="card-header">
+				<h3>Alterar senha</h3>
+			</div>
+			<form tth:action="@{'/gerencial/usuario/editar/' + ${usuarioId} + '/alterar-senha'}" th:object="${usuarioDTO}" method="post"
+				class="row g-3">
+				<div class="col-md-6">
+					<label for="inputSenha" class="form-label">Nova senha:</label>
+					<input type="password" class="form-control" id="inputSenha" th:field="*{senha}">
+				</div>
+				<div class="col-md-6">
+					<label for="inputConfirmarSenha" class="form-label">Confirma senha:</label>
+					<input type="password" class="form-control" id="inputConfirmarSenha" th:field="*{confirmarSenha}">
+				</div>
+				
+				<div class="col-8">
+					<button type="submit" class="btn btn-outline-success mb-3">Salvar</button>
+				</div>
+
+			</form>
+		</div>
+	</section>
+	<div th:replace="~{gerencial/fragments/footer-admin :: footer}"></div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+
+</html>

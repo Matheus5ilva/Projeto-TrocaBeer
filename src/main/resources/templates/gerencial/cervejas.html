@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="pt_br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{gerencial/fragments/header-admin :: head}"></head>
+
+<body>
+	<div class="wrapper d-flex align-items-stretch">
+		<nav th:replace="~{gerencial/fragments/header-admin :: nav}"></nav>
+		<div id="content" class="p-4 p-md-5 pt-5">
+			<h2 class="mb-4">Cervejas</h2>
+			<div class="row">
+				<div class="col-sm-4 d-flex col align-self-end mb-4">
+					<th:block th:if="${numeroCerveja >= 2 && usuario.premium == false}">
+						<a class="btn btn-outline-warning btn-sm rounded-3" href="#" data-toggle="modal"
+							data-target="#exampleModal">Atualizar para Premium</a>
+
+					</th:block>
+					<th:block th:if="${numeroCerveja >= 2 && usuario.premium == true}">
+						<a th:href="@{/cervejas/adicionar}" class="btn btn-outline-success btn-sm rounded-3"><i
+								class="fa fa-plus" aria-hidden="true"></i>
+							Criar Cerveja</a>
+					</th:block>
+					<th:block th:if="${numeroCerveja < 2}">
+						<a th:href="@{/cervejas/adicionar}" class="btn btn-outline-success btn-sm rounded-3"><i
+								class="fa fa-plus" aria-hidden="true"></i>
+							Criar Cerveja</a>
+					</th:block>
+				</div>
+			</div>
+			<div class="table-responsive">
+				<table class="table caption-top">
+					<caption>Lista de Cervejas</caption>
+					<thead>
+						<tr>
+							<th scope="col">Nome</th>
+							<th scope="col">Estilo</th>
+							<th scope="col">Fabricação</th>
+							<th scope="col">Validade</th>
+							<th scope="col">Estoque</th>
+							<th scope="col">Tipo de Contato</th>
+							<th scope="col">Ação</th>
+						</tr>
+					</thead>
+					<tbody class="table-group-divider">
+						<tr th:each="cerveja : ${cervejas}">
+							<td th:text="${cerveja.nome}"></td>
+							<td th:text="${cerveja.estilo.nome}"></td>
+							<td th:text="${#dates.format(cerveja.dataFabricacao, 'dd/MM/yyyy')}"></td>
+							<td th:text="${#dates.format(cerveja.dataValidade, 'dd/MM/yyyy')}"></td>
+							<td th:text="${#numbers.formatDecimal(cerveja.estoque, 2, 'COMMA', 2, 'POINT')}">
+							</td>
+							<td th:text="${cerveja.tipoTroca.descricao}"></td>
+							<td>
+								<div class="d-inline-flex">
+									<a class="btn btn-outline-primary mr-2 rounded-3"
+										th:href="@{'/cervejas/complemento/' + ${cerveja.id}}"
+										aria-label="Dados Adicionais">
+										<i class="fa fa-paperclip" aria-hidden="true"> Estoque</i>
+									</a>
+									<a class="btn btn-outline-warning mr-2 rounded-3"
+										th:href="@{'/cervejas/editar/' + ${cerveja.id}}" aria-label="Editar">
+										<i class="fa fa-pencil" aria-hidden="true"> Editar</i>
+									</a>
+									<th:block th:if="${cerveja.possuiTroca}">
+										<a th:href="@{#}" class="btn btn-outline-danger rounded-3" aria-label="Delete"
+											onclick="return confirm('Não é possível efetuar a exclusão da cerveja devido à presença de troca(s) associada(s).')">
+											<i class="fa fa-trash-o" aria-hidden="true"> Excluir</i>
+										</a>
+									</th:block>
+									<th:block th:if="${cerveja.possuiTroca != true}">
+										<a class="btn btn-outline-danger rounded-3" aria-label="Delete"
+											onclick="return confirm('Deseja realmente excluir este registro?')"
+											th:href="@{'/cervejas/apagar/' + ${cerveja.id}}">
+											<i class="fa fa-trash-o" aria-hidden="true"> Excluir</i>
+										</a>
+									</th:block>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Atualizar para Premium</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<p>A versão do sistema em uso é gratuita. Para cadastrar mais cervejas, é necessário efetuar uma
+							assinatura.</p>
+					</div>
+					<div class="modal-footer">
+						<a th:href="@{'https://wa.me/5538988499084?text=Gostaria%20de%20solicitar%20a%20versão%20premium!%0ANome:%20'+ ${usuario.nome} + '%0AE-mail:%20' + ${usuario.email}}"
+							class="btn btn-outline-success btn-sm rounded-3" target="_blank">
+							<i class="fa fa-whatsapp"></i> Enviar Solicitação
+						</a>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:replace="~{gerencial/fragments/footer-admin :: footer}"></div>
+	<script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+</body>
+
+</html>

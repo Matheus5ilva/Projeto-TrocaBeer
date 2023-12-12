@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt_br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{gerencial/fragments/header-admin :: head}"></head>
+
+<body>
+    <div class="wrapper d-flex align-items-stretch">
+        <nav th:replace="~{gerencial/fragments/header-admin :: nav}"></nav>
+        <div id="content" class="p-4 p-md-5 pt-5">
+            <h2 class="mb-4">Alterar Senha - <span th:text="${usuario.nome}"></span></h2>
+            <form th:action="@{'/usuario/editar/' + ${usuarioId} + '/alterar-senha'}"
+                th:object="${usuarioDTO}" method="post" class="p-3 p-md-4 pt-3">
+                <div class="form-row">
+					<div class="form-group col-md-12">
+						<input type="password" class="form-control" id="inputSenha" th:field="*{senha}">
+						<label for="inputSenha" class="form-label">Senha* </label>
+						<span class="text-danger" th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}"></span>
+					</div>
+					<div class="form-group col-md-12">
+						<input type="password" class="form-control" id="inputConfirmarSenha" th:field="*{confirmarSenha}">
+						<label for="inputConfirmarSenha" class="form-label">Confirmar Senha* </label>
+						<span class="text-danger" th:if="${#fields.hasErrors('confirmarSenha')}" th:errors="*{confirmarSenha}"></span>
+					</div>
+				</div>
+                <button type="submit" class="btn btn-outline-success mb-3">Salvar</button>
+            </form>
+        </div>
+    </div>
+    <div th:replace="~{gerencial/fragments/footer-admin :: footer}"></div>
+    <script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+</body>
+
+</html>

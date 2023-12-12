@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="pt_br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{gerencial/fragments/header-admin :: head}"></head>
+
+<body>
+	<div class="wrapper d-flex align-items-stretch">
+		<nav th:replace="~{gerencial/fragments/header-admin :: nav}"></nav>
+		<div id="content" class="p-4 p-md-5 pt-5">
+			<h2 class="mb-2">Editar - <span th:text="${usuario.nome}"></span></h2>
+			<label th:if="${usuario.premium == false && usuario.tipoPessoa.descricao == 'Mestre Cervejeiro'}" class="mb-3"><strong>Tipo de Conta: Gratuito</strong><a th:href="@{'https://wa.me/5538988499084?text=Gostaria%20de%20solicitar%20a%20versão%20premium!%0ANome:%20'+ ${usuario.nome} + '%0AE-mail:%20' + ${usuario.email}}" target="_blank"> Solicitar versão premium</a></label>
+			<label th:if="${usuario.premium == true && usuario.tipoPessoa.descricao == 'Mestre Cervejeiro'}" class="mb-3"><strong>Tipo de Conta: Premium</strong></label>
+			<form th:action="@{'/usuario/editar/' + ${usuarioId}}" th:object="${usuarioDTO}" method="post"
+				class="p-3 p-md-4 pt-3">
+				<div class="form-row">
+					<div class="form-group col-md-8">
+						<input type="text" class="form-control" id="inputNome" th:field="*{nome}">
+						<label for="inputNome" class="form-label">Nome</label>
+						<span class="text-danger" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+					</div>
+					<div class="form-group col-md-4">
+						<select id="inputTipo" class="form-control" th:field="*{tipoPessoa}">
+							<option value="MESTRE_CERVEJEIRO" th:selected="${tipoPessoa}">Mestre-Cervejeiro
+							</option>
+							<option value="APRECIADOR" th:selected="${tipoPessoa}">Apreciador
+							</option>
+						</select>
+						<label for="inputTipo" class="form-label">Tipo de cadastro</label>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-8">
+						<input type="email" class="form-control" id="inputEmail" th:field="*{email}">
+						<label for="inputEmail" class="form-label">E-mail</label>
+						<span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+					</div>
+					<div class="form-group col-md-4">
+						<a class="btn btn-outline-warning btn-sm rounded-3 mt-2" aria-label="Alterar Senha"
+							th:href="@{'/usuario/editar/' + ${usuario.id} + '/alterar-senha'}">
+							Alterar senha
+						</a>
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group col-md-8">
+						<input type="text" class="form-control" id="inputLogradouro" th:field="*{logradouro}">
+						<label for="inputLogradouro" class="form-label">Logradouro</label>
+						<span class="text-danger" th:if="${#fields.hasErrors('logradouro')}"
+							th:errors="*{logradouro}"></span>
+					</div>
+					<div class="form-group col-md-4">
+						<input type="text" class="form-control" id="inputNumero" th:field="*{numero}">
+						<label for="inputNumero" class="form-label">Numero</label>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-4">
+						<input type="text" class="form-control" id="inputBairro" th:field="*{bairro}">
+						<label for="inputBairro" class="form-label">Bairro</label>
+						<span class="text-danger" th:if="${#fields.hasErrors('bairro')}" th:errors="*{bairro}"></span>
+					</div>
+					<div class="form-group col-md-4">
+						<select id="inputEstado" class="form-control" th:field="*{cidade.estado.id}">
+							<option value="" disabled selected>Selecione um estado</option>
+							<option th:each="estado : ${estados}" th:value="${estado.id}" th:text="${estado.nome}">
+							</option>
+						</select>
+						<label for="inputEstado" class="form-label">Estado</label>
+						<span class="text-danger" th:if="${#fields.hasErrors('cidade.estado.id')}"
+							th:errors="*{cidade.estado.id}"></span>
+					</div>
+					<div class="form-group col-md-4">
+						<select id="inputCidade" class="form-control" th:field="*{cidade.id}" disabled>
+							<option value="" disabled selected>Selecione um estado primeiro</option>
+							<!-- Opções de cidade serão preenchidas dinamicamente -->
+						</select>
+						<label for="inputCidade" class="form-label">Cidade</label>
+						<span class="text-danger" th:if="${#fields.hasErrors('cidade.id')}"
+							th:errors="*{cidade.id}"></span>
+						<input type="hidden" id="cidadeIdSelecionada" th:value="${cidadeIdSelecionada}" />
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-4">
+						<input type="number" class="form-control" id="inputCep" th:field="*{cep}">
+						<label for="inputCep" class="form-label">Cep</label>
+						<span class="text-danger" th:if="${#fields.hasErrors('cep')}" th:errors="*{cep}"></span>
+					</div>
+					<div class="form-group col-md-4">
+						<input type="text" class="form-control" id="inputComplemento" th:field="*{complemento}">
+						<label for="inputComplemento" class="form-label">Complemento</label>
+					</div>
+					<div class="form-group col-md-4">
+						<input type="number" class="form-control" id="inputTelefone" th:field="*{telefone}">
+						<label for="inputTelefone" class="form-label">Telefone</label>
+						<span class="text-danger" th:if="${#fields.hasErrors('telefone')}"
+							th:errors="*{telefone}"></span>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-8">
+						<button type="submit" class="btn btn-outline-success mb-3">Salvar</button>
+					</div>
+					<div class="form-group col-md-4">
+						<a class="btn btn-outline-danger btn-sm rounded-3 mt-2" aria-label="Desativar Senha"
+							th:href="@{'/usuario/apagar/' + ${usuario.id}}">
+							Desativar Conta
+						</a>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div th:replace="~{gerencial/fragments/footer-admin :: footer}"></div>
+		<script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+		<script>
+			$(document).ready(function () {
+				var selectEstado = $('#inputEstado');
+				var selectCidade = $('#inputCidade');
+				var cidadeIdSelecionada = $('#cidadeIdSelecionada').val(); // Pega o ID da cidade do campo oculto
+
+				// Função para carregar as cidades com base no estado selecionado
+				function carregarCidades(estadoId) {
+					$.ajax({
+						url: '/ajax/buscarCidadesPorEstado',
+						dataType: 'json',
+						data: {
+							estadoId: estadoId
+						},
+						success: function (data) {
+							selectCidade.empty();
+							if (estadoId !== '') {
+								selectCidade.append('<option value="" disabled selected>Selecione uma cidade</option>');
+								$.each(data, function (index, cidade) {
+									selectCidade.append('<option value="' + cidade.id + '">' + cidade.nome + '</option>');
+								});
+								selectCidade.prop('disabled', false);
+
+								// Selecionar a cidade com base no ID, se disponível
+								if (cidadeIdSelecionada !== '') {
+									selectCidade.val(cidadeIdSelecionada);
+								}
+							} else {
+								selectCidade.prop('disabled', true);
+							}
+						}
+					});
+				}
+
+				// Define a cidade com base na requisição se o estado já estiver preenchido
+				var estadoInicial = selectEstado.val();
+				if (estadoInicial !== '') {
+					carregarCidades(estadoInicial);
+				} else {
+					selectCidade.prop('disabled', true);
+				}
+
+				// Evento de change no estado
+				selectEstado.on('change', function () {
+					var estadoId = $(this).val();
+					carregarCidades(estadoId);
+				});
+			});
+		</script>
+</body>
+
+</html>
