@@ -34,7 +34,7 @@ public class WebSecurityConfig {
 				.requestMatchers("/alterar-senha/**").permitAll().requestMatchers("/home").authenticated()
 				.requestMatchers("/pesquisa/**").authenticated().requestMatchers("/cerveja/**").authenticated()
 				.requestMatchers("/troca/**").authenticated().requestMatchers("/usuario/**").authenticated()
-				.requestMatchers("/cervejas/**").hasRole("ADMIN").requestMatchers("/trocas/**").authenticated()
+				.requestMatchers("/cervejas/**").hasRole("ADMIN").requestMatchers("/trocas/**").authenticated().requestMatchers("/avaliacoes/**").authenticated()
 				.requestMatchers("/suporte/**").authenticated().requestMatchers("/ajax/**").permitAll())
 				.formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/home", true).permitAll())
 				.logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll());
