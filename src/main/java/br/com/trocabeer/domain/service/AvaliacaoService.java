@@ -47,7 +47,14 @@ public class AvaliacaoService {
 		return null;
 
 	}
-
+	@Transactional
+	public  Avaliacao transformaTrocaEmAvaliacao(Troca troca){
+		Avaliacao avaliacao = new Avaliacao();
+		avaliacao.setTroca(troca);
+		avaliacao.setApreciador(troca.getApreciador());
+		avaliacao.setMestreCervejeiro(troca.getMestreCervejeiro());
+		return avaliacao;
+	}
 	@Transactional
 	public Avaliacao buscarOuFalhar(UUID avaliacaoId) {
 		return avaliacaoRepository.findById(avaliacaoId).orElseThrow(() -> new EntityNotFoundException("Avaliação não encontrada"));

@@ -32,6 +32,8 @@ public class AvaliacaoListaDTO {
 		AvaliacaoListaDTO avaliacaoDTO = modelMapper.map(avaliacao, this.getClass());
 
 		avaliacaoDTO.setNomeCerveja(avaliacao.getTroca().getCerveja().getNome());
+		avaliacaoDTO.setDataSolicitado(troca.getDataSolicitado());
+
 		return avaliacaoDTO;
 	}
 

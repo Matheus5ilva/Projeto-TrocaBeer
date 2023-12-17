@@ -3,6 +3,7 @@ package br.com.trocabeer.controller;
 import java.util.List;
 import java.util.UUID;
 
+import br.com.trocabeer.domain.service.AvaliacaoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,9 @@ public class TrocaGerencialController {
 	@Autowired
 	private TrocaRepository trocaRepository;
 
+	@Autowired
+	private AvaliacaoService avaliacaoService;
+
 	@GetMapping
 	public String listarTrocas(Model model, Authentication authentication) {
 		Usuario usuario = buscaUsuario(authentication.getName());
@@ -73,6 +77,14 @@ public class TrocaGerencialController {
 	public String rejeitaTrocaCerveja(@PathVariable UUID trocaId) {
 		logger.debug("Estou dentro da rotina de rejeitaTrocaCerveja");
 		trocaService.atualizaStatus(trocaId, StatusTroca.RECUSADO);
+		return "redirect:/trocas";
+	}
+
+	@GetMapping("/entregue/{trocaId}")
+	public String entregueTrocaCerveja(@PathVariable UUID trocaId) {
+		logger.debug("Estou dentro da rotina de entregueTrocaCerveja");
+		trocaService.atualizaStatus(trocaId, StatusTroca.ENTREGUE);
+		avaliacaoService.salvar(avaliacaoService.transformaTrocaEmAvaliacao(trocaService.buscarOuFalhar(trocaId)));
 		return "redirect:/trocas";
 	}
 

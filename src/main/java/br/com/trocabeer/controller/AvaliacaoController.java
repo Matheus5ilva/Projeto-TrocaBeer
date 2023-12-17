@@ -1,12 +1,10 @@
 package br.com.trocabeer.controller;
 
 import br.com.trocabeer.controller.dto.*;
-import br.com.trocabeer.domain.model.Cerveja;
-import br.com.trocabeer.domain.model.Cidade;
-import br.com.trocabeer.domain.model.Troca;
-import br.com.trocabeer.domain.model.Usuario;
+import br.com.trocabeer.domain.model.*;
 import br.com.trocabeer.domain.model.enums.StatusTroca;
 import br.com.trocabeer.domain.model.enums.TipoPessoa;
+import br.com.trocabeer.domain.repository.AvaliacaoRepository;
 import br.com.trocabeer.domain.repository.CervejaRepository;
 import br.com.trocabeer.domain.repository.TrocaRepository;
 import br.com.trocabeer.domain.repository.UsuarioRepository;
@@ -40,30 +38,27 @@ public class AvaliacaoController {
 	private UsuarioRepository usuarioRepository;
 
 	@Autowired
-	private TrocaService trocaService;
-
-	@Autowired
-	private TrocaRepository trocaRepository;
-
+	private AvaliacaoRepository avaliacaoRepository;
 
 	@GetMapping
 	public String listarAvaliacao(Model model, Authentication authentication) {
 		Usuario usuario = buscaUsuario(authentication.getName());
 
 		if (usuario.getTipoPessoa().equals(TipoPessoa.APRECIADOR)) {
-			List<Troca> trocas = trocaRepository.findByApreciador(usuario);
+			List<Avaliacao> avaliacoes = avaliacaoRepository.findByApreciador(usuario);
 			model.addAttribute("usuario", usuario);
-			model.addAttribute("trocas", new TrocaListaDTO().toListaTrocaDTO(trocas));
+			model.addAttribute("avaliacoes", new AvaliacaoListaDTO().toListaAvaliacaoDTO(avaliacoes));
 
-			return "gerencial/trocas-cervejeiro";
+			return "gerencial/avaliacoes-apreciador";
 		}
 
-		List<Troca> trocas = trocaRepository.findByMestreCervejeiroOrApreciador(usuario, usuario);
 
+		List<Avaliacao> avaliacoes = avaliacaoRepository.findByMestreCervejeiroOrApreciador(usuario, usuario);
 		model.addAttribute("usuario", usuario);
-		model.addAttribute("trocas", new TrocaListaDTO().toListaTrocaDTO(trocas));
+		model.addAttribute("avaliacoes", new AvaliacaoListaDTO().toListaAvaliacaoDTO(avaliacoes));
 
-		return "gerencial/trocas";
+		return "gerencial/avaliacoes";
+
 	}
 
 

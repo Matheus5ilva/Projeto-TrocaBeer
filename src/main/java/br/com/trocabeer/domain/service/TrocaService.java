@@ -5,7 +5,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
+import br.com.trocabeer.domain.repository.AvaliacaoRepository;
 import br.com.trocabeer.domain.service.utils.EmailService;
+import jakarta.persistence.AttributeOverride;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,9 @@ public class TrocaService {
 	@Autowired
 	private EmailService emailService;
 
+	@Autowired
+	private AvaliacaoService avaliacaoService;
+
 	@Transactional
 	public Troca salvar(Troca troca) {
 		try {
@@ -52,20 +57,28 @@ public class TrocaService {
 
 	@Transactional
 	public Troca atualizaStatus(UUID trocaId, StatusTroca status) {
+		try {
+			Troca troca = this.buscarOuFalhar(trocaId);
+			logger.info("Atualizando status da troca: {}", troca);
+			troca.setStatus(status);
 
-		Troca troca = this.buscarOuFalhar(trocaId);
+			if (StatusTroca.ACEITO.equals(status)) {
+				Cerveja cerveja = cervejaService.buscarCerveja(troca.getCerveja().getId());
+				cerveja.setEstoqueMovimento(cerveja.getEstoqueMovimento().subtract(troca.getQuantidadeTroca()));
 
-		troca.setStatus(status);
+			}
 
-		if (status.equals(StatusTroca.ACEITO)) {
-			Cerveja cerveja = cervejaService.buscarCerveja(troca.getCerveja().getId());
-			cerveja.setEstoqueMovimento(cerveja.getEstoqueMovimento().subtract(troca.getQuantidadeTroca()));
 
+			if (StatusTroca.ACEITO.equals(status) || StatusTroca.RECUSADO.equals(status)) {
+				this.enviarEmail(troca);
+			}
+
+			Troca trocaAtualizada = trocaRepository.save(troca);
+			return trocaAtualizada;
+		}catch (Exception e) {
+			logger.error("Erro ao atualizar status da troca: {}", e.getMessage());
+			throw new RuntimeException("Erro ao atualizar status da troca", e);
 		}
-
-		this.enviarEmail(troca);
-
-		return trocaRepository.save(troca);
 	}
 
 	@Transactional

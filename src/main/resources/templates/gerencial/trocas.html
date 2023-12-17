@@ -48,6 +48,14 @@
 										th:href="@{'/trocas/recusado/' + ${troca.id}}" aria-label="Recusar">
 										<i class="fa fa-close" aria-hidden="true"> Recusar</i>
 									</a>
+
+								</div>
+								<div class="d-inline-flex"
+									 th:if="${troca.status.descricao == 'Aceito' && usuario.id != troca.apreciador.id}">
+									<a class="btn btn-outline-success mr-3 rounded-3"
+									   th:href="@{'/trocas/entregue/' + ${troca.id}}" aria-label="Aceitar">
+										<i class="fa fa-truck" aria-hidden="true"> Entregar</i>
+									</a>
 								</div>
 							</td>
 

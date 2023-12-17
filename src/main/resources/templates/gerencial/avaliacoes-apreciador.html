@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt_br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{gerencial/fragments/header-admin :: head}"></head>
+
+<body>
+	<div class="wrapper d-flex align-items-stretch">
+		<nav th:replace="~{gerencial/fragments/header-admin :: nav}"></nav>
+		<div id="content" class="p-4 p-md-5 pt-5">
+			<h2 class="mb-4">Avaliações</h2>
+			<div class="table-responsive">
+				<table class="table caption-top">
+					<caption>Lista de Avaliações</caption>
+					<thead>
+						<tr>
+							<th scope="col">Cerveja</th>
+							<th scope="col">Mestre Cervejeiro</th>
+							<th scope="col">Data Solicitação</th>
+							<th scope="col">Ação</th>
+						</tr>
+					</thead>
+					<tbody class="table-group-divider">
+						<tr th:each="avaliacao : ${avaliacoes}">
+							<td th:text="${avaliacao.nomeCerveja}"></td>
+							<td th:text="${avaliacao.mestreCervejeiro.nome}"></td>
+							<td th:text="${#dates.format(avaliacao.dataSolicitado, 'dd/MM/yyyy')}"></td>
+							<td>
+								<div class="d-inline-flex">
+									<a class="btn btn-outline-success mr-3 rounded-3"
+									   th:href="@{'/avaliacoes/avaliar/' + ${avaliacao.troca.id}}" aria-label="Avaliar">
+										<i class="fa fa-star" aria-hidden="true"> </i>
+									</a>
+								</div>
+							</td>
+						</tr>
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div th:replace="~{gerencial/fragments/footer-admin :: footer}"></div>
+	<script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+</body>
+
+</html>
