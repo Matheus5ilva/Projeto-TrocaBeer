@@ -4,140 +4,47 @@
 <head th:replace="~{gerencial/fragments/header-admin :: head}"></head>
 
 <body>
-	<div class="wrapper d-flex align-items-stretch">
-		<nav th:replace="~{gerencial/fragments/header-admin :: nav}"></nav>
-		<div id="content" class="p-4 p-md-5 pt-5">
-			<h2 class="mb-4">Trocas</h2>
-			<div class="table-responsive">
-				<table class="table caption-top">
-					<caption>Lista de Trocas</caption>
-					<thead>
-						<tr>
-							<th scope="col">Cerveja</th>
-							<th scope="col">Apreciador/Mestre Cervejeiro</th>
-							<th scope="col">Data Solicitação</th>
-							<th scope="col">Quantidade</th>
-							<th scope="col">Tipo</th>
-							<th scope="col">Status da Troca</th>
-							<th scope="col">Ação</th>
-						</tr>
-					</thead>
-					<tbody class="table-group-divider">
-						<tr th:each="troca : ${trocas}">
-							<td th:text="${troca.cervejaNome}"></td>
-							<td th:if="${usuario.id != troca.apreciador.id}"><a data-toggle="modal"
-									th:attr="data-target='#exampleModalCenter_'+${troca.id }"
-									th:href="@{'#exampleModalCenter_'+ ${troca.id}}"
-									th:text="${troca.apreciador.nome}"></a></td>
-							<td th:if="${usuario.id == troca.apreciador.id}"><a data-toggle="modal"
-									th:attr="data-target='#exampleModalCenter_'+${troca.id }"
-									th:href="@{'#exampleModalCenter_'+ ${troca.id}}"
-									th:text="${troca.mestreCervejeiro.nome}"></a></td>
-							<td th:text="${#dates.format(troca.dataSolicitado, 'dd/MM/yyyy')}"></td>
-							<td th:text="${#numbers.formatDecimal(troca.quantidadeTroca, 2, 'COMMA', 2, 'POINT')}"></td>
-							<td th:text="${troca.tipoTroca.descricao}"></td>
-							<td th:text="${troca.status.descricao}"></td>
-							<td>
-								<div class="d-inline-flex"
-									th:if="${troca.status.descricao == 'Pendente' && usuario.id != troca.apreciador.id}">
-									<a class="btn btn-outline-success mr-3 rounded-3"
-										th:href="@{'/trocas/aceita/' + ${troca.id}}" aria-label="Aceitar">
-										<i class="fa fa-check" aria-hidden="true"> Aceitar</i>
-									</a>
-									<a class="btn btn-outline-danger mr-3 rounded-3"
-										th:href="@{'/trocas/recusado/' + ${troca.id}}" aria-label="Recusar">
-										<i class="fa fa-close" aria-hidden="true"> Recusar</i>
-									</a>
-								</div>
-							</td>
+<div class="wrapper d-flex align-items-stretch">
+	<nav th:replace="~{gerencial/fragments/header-admin :: nav}"></nav>
+	<div id="content" class="p-4 p-md-5 pt-5">
+		<h2 class="mb-4">Avaliações</h2>
+		<div class="table-responsive">
+			<table class="table caption-top">
+				<caption>Lista de Avaliações</caption>
+				<thead>
+				<tr>
+					<th scope="col">Cerveja</th>
+					<th scope="col">Mestre Cervejeiro</th>
+					<th scope="col">Data Solicitação</th>
+					<th scope="col">Ação</th>
+				</tr>
+				</thead>
+				<tbody class="table-group-divider">
+				<tr th:each="avaliacao : ${avaliacoes}">
+					<td th:text="${avaliacao.nomeCerveja}"></td>
+					<td th:text="${avaliacao.mestreCervejeiro.nome}"></td>
+					<td th:text="${#dates.format(avaliacao.dataSolicitado, 'dd/MM/yyyy')}"></td>
+					<td>
+						<div class="d-inline-flex">
+							<a th:if="${usuario.id == avaliacao.apreciador.id}" class="btn btn-outline-success mr-3 rounded-3"
+							   th:href="@{'/avaliacoes/' + ${avaliacao.id}}" aria-label="Avaliar">
+								<i class="fa fa-star" aria-hidden="true"> </i>
+							</a>
+							<a th:if="${usuario.id != avaliacao.apreciador.id}" class="btn btn-outline-success mr-3 rounded-3"
+							   th:href="@{'/avaliacoes/' + ${avaliacao.id} + '/visualizar'}" aria-label="Avaliar">
+								<i class="fa fa-sticky-note-o" aria-hidden="true"> </i>
+							</a>
+						</div>
+					</td>
+				</tr>
 
-
-							<div th:if="${usuario.id == troca.apreciador.id}" class="modal fade"
-								th:id="exampleModalCenter_ + ${troca.id}" tabindex="-1" role="dialog"
-								aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-								<div class="modal-dialog modal-dialog-centered" role="document">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLongTitle"
-												th:text="${troca.mestreCervejeiro.nome}"> </h5>
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											</button>
-										</div>
-										<div class="modal-body">
-											<div class="form-row">
-												<div class="col-md-12">
-													<label style="font-size: 14px;"><strong>Tipo: </strong>Mestre
-														Cervejeiro</label>
-												</div>
-												<div class="col-md-12">
-													<label style="font-size: 14px;"><strong>Endereço: </strong><span
-															th:text="${troca.mestreCervejeiro.endereco.cidade.nome}"></span>-<span
-															th:text="${troca.mestreCervejeiro.endereco.cidade.estado.sigla}"></span></label>
-												</div>
-
-												<div class="col-md-12">
-													<label style="font-size: 15px;"><strong>Email: </strong><span
-															th:text="${troca.mestreCervejeiro.email}"></span></label>
-												</div>
-												<div class="col-md-12">
-													<label style="font-size: 15px;"><strong>Telefone: </strong><span
-															th:text="${troca.mestreCervejeiro.telefone}"></span></label>
-												</div>
-											</div>
-										</div>
-									</div>
-
-								</div>
-							</div>
-							<div th:if="${usuario.id != troca.apreciador.id}" class="modal fade"
-								th:id="exampleModalCenter_ + ${troca.id}" tabindex="-1" role="dialog"
-								aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-								<div class="modal-dialog modal-dialog-centered" role="document">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title" id="exampleModalLongTitle"
-												th:text="${troca.apreciador.nome}"></h5>
-											<h5 class="modal-title" id="exampleModalLongTitle"></h5>
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											</button>
-										</div>
-										<div class="modal-body">
-											<div class="form-row">
-												<div class="col-md-12">
-													<label style="font-size: 14px;"><strong>Tipo:
-														</strong>Apreciador</label>
-												</div>
-												<div class="col-md-12">
-													<label style="font-size: 14px;"><strong>Endereço: </strong><span
-															th:text="${troca.apreciador.endereco.cidade.nome}"></span>-<span
-															th:text="${troca.apreciador.endereco.cidade.estado.sigla}"></span></label>
-												</div>
-
-												<div class="col-md-12">
-													<label style="font-size: 15px;"><strong>Email: </strong><span
-															th:text="${troca.apreciador.email}"></span></label>
-												</div>
-												<div class="col-md-12">
-													<label style="font-size: 15px;"><strong>Telefone: </strong><span
-															th:text="${troca.apreciador.telefone}"></span></label>
-												</div>
-											</div>
-										</div>
-									</div>
-
-								</div>
-							</div>
-						</tr>
-
-					</tbody>
-				</table>
-			</div>
+				</tbody>
+			</table>
 		</div>
 	</div>
-	<div th:replace="~{gerencial/fragments/footer-admin :: footer}"></div>
-	<script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+</div>
+<div th:replace="~{gerencial/fragments/footer-admin :: footer}"></div>
+<script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
 </body>
 
 </html>

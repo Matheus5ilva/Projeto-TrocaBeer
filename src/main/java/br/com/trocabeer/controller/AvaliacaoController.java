@@ -8,10 +8,12 @@ import br.com.trocabeer.domain.repository.AvaliacaoRepository;
 import br.com.trocabeer.domain.repository.CervejaRepository;
 import br.com.trocabeer.domain.repository.TrocaRepository;
 import br.com.trocabeer.domain.repository.UsuarioRepository;
+import br.com.trocabeer.domain.service.AvaliacaoService;
 import br.com.trocabeer.domain.service.TrocaService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/avaliacoes")
@@ -39,6 +42,9 @@ public class AvaliacaoController {
 
 	@Autowired
 	private AvaliacaoRepository avaliacaoRepository;
+
+	@Autowired
+	private AvaliacaoService avaliacaoService;
 
 	@GetMapping
 	public String listarAvaliacao(Model model, Authentication authentication) {
@@ -61,54 +67,43 @@ public class AvaliacaoController {
 
 	}
 
+	@GetMapping("/{avaliacaoId}")
+	public String exibirFormularioAvaliacao(Model model, @PathVariable UUID avaliacaoId,
+											  Authentication authentication) {
 
-	/**
-	@PostMapping
-	public String troca(@Valid @ModelAttribute("trocaDTO") TrocaIndexDTO trocaDto, BindingResult bindingResult,
-			RedirectAttributes attributes, Model model, Authentication authentication) {
+		logger.info("Entrando na rotina de avaliacao cerveja");
 
-		String email = authentication.getName();
+		Avaliacao avaliacao = avaliacaoService.buscarOuFalhar(avaliacaoId);
 
-		Usuario usuario = usuarioRepository.findByEmail(email)
-				.orElseThrow(() -> new UsernameNotFoundException("Usuário ou senha não foi encontrado"));
-		Cidade cidadeDoUsuario = usuario.getEndereco().getCidade();
-
-		List<Cerveja> cervejasDisponiveis = cervejaRepository
-				.findByUsuario_Endereco_CidadeAndUsuario_AtivoAndUsuarioNotAndAtivoAndEstoqueMovimentoGreaterThan(cidadeDoUsuario,
-						true, usuario, true, BigDecimal.ZERO);
-		if (bindingResult.hasErrors()
-				|| trocaDto.getQuantidadeProposta().compareTo(trocaDto.getCerveja().getEstoqueMovimento()) > 0) {
-
-			if (trocaDto.getQuantidadeProposta().compareTo(trocaDto.getCerveja().getEstoqueMovimento()) > 0) {
-				logger.debug("A quantidade proposta excede o nível de disponibilidade em estoque.");
-				bindingResult.rejectValue("quantidadeProposta", "quantidadeProposta",
-						"A quantidade proposta excede o nível de disponibilidade em estoque.");
-			}
-			trocaDto.setQuantidadeProposta(BigDecimal.ZERO);
-			trocaDto.getCerveja().setId(trocaDto.getCerveja().getId());
-			if (TipoPessoa.MESTRE_CERVEJEIRO.equals(usuario.getTipoPessoa())) {
-				Integer numeroCerveja = cervejaRepository.countByUsuario(usuario);
-				Integer numeroTroca = trocaRepository.countByMestreCervejeiro(usuario);
-				Integer numeroTrocaPendente = trocaRepository.countByMestreCervejeiroAndStatus(usuario,
-						StatusTroca.PENDENTE);
-				model.addAttribute("relatorioDTO",
-						new RelatorioIndexDTO(numeroTroca, numeroCerveja, numeroTrocaPendente));
-			} else {
-				model.addAttribute("relatorioDTO", new RelatorioIndexDTO(0, 0, 0));
-			}
-			model.addAttribute("pesquisaDTO", new PesquisaDTO());
-			model.addAttribute("trocaDTO", trocaDto);
-			model.addAttribute("cervejas", new CervejaIndexDTO().toListaCervejaDTO(cervejasDisponiveis));
-			model.addAttribute("endereco", cidadeDoUsuario.getNome() + " - " + cidadeDoUsuario.getEstado().getSigla());
-			model.addAttribute("usuario", usuario);
-			return "gerencial/index";
-		}
-
-		trocaService.salvar(trocaDto.toTroca(usuario));
-
-		return "redirect:/trocas";
+		model.addAttribute("usuario", this.buscaUsuario(authentication.getName()));
+		model.addAttribute("avaliacaoDTO", new AvaliacaoDTO().toAvaliacaoDTO(avaliacao));
+		return "gerencial/criar-avaliacao";
 	}
-	*/
+
+	@PostMapping("/{avaliacaoId}")
+	public String formularioAvaliacao(@Valid @ModelAttribute("avaliacaoDTO") AvaliacaoDTO avaliacaoDTO,
+									  BindingResult bindingResult, Model model, @PathVariable UUID avaliacaoId, Authentication authentication) {
+
+		Avaliacao avaliacaoAtual = avaliacaoService.buscarOuFalhar(avaliacaoId);
+		avaliacaoAtual.setAvaliacao(avaliacaoDTO.getAvaliacao());
+		model.addAttribute("avaliacao", avaliacaoService.salvar(avaliacaoAtual));
+
+		return "redirect:/avaliacoes";
+	}
+
+	@GetMapping("/{avaliacaoId}/visualizar")
+	public String exibirAvaliacaoEscrito(Model model, @PathVariable UUID avaliacaoId,
+											Authentication authentication) {
+
+		logger.info("Entrando na rotina de avaliacao cerveja");
+
+		Avaliacao avaliacao = avaliacaoService.buscarOuFalhar(avaliacaoId);
+
+		model.addAttribute("usuario", this.buscaUsuario(authentication.getName()));
+		model.addAttribute("avaliacaoDTO", new AvaliacaoDTO().toAvaliacaoDTO(avaliacao));
+		return "gerencial/avaliacao";
+	}
+
 	private Usuario buscaUsuario(String email) {
 		return usuarioRepository.findByEmail(email)
 				.orElseThrow(() -> new UsernameNotFoundException("Usuário ou senha não foi encontrado"));

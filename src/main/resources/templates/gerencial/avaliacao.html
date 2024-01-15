@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt_br" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{gerencial/fragments/header-admin :: head}"></head>
+
+<body>
+<div class="wrapper d-flex align-items-stretch">
+	<nav th:replace="~{gerencial/fragments/header-admin :: nav}"></nav>
+	<div id="content" class="p-4 p-md-5 pt-5">
+		<h2 class="mb-4">Avaliação - <span th:text="${avaliacaoDTO.nomeCerveja}"></span></h2>
+		<div class="row">
+			<div class="col-md-6">
+				<label><strong>Mestre-cervejeiro: </strong><span th:text="${avaliacaoDTO.mestreCervejeiro}"></span></label>
+			</div>
+			<div class="col-md-6">
+				<label><strong>Data de solicitação: </strong><span th:text="${#dates.format(avaliacaoDTO.dataSolicitado, 'dd/MM/yyyy')}"></span></label>
+			</div>
+			<div class="col-md-12">
+				<label><strong>Avaliação: </strong></label>
+				<label th:text="${avaliacaoDTO.avaliacao}"></label>
+			</div>
+		</div>
+	</div>
+</div>
+<div th:replace="~{gerencial/fragments/footer-admin :: footer}"></div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+
+</html>
