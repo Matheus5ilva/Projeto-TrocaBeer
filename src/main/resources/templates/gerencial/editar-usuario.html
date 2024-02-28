@@ -8,7 +8,7 @@
 		<nav th:replace="~{gerencial/fragments/header-admin :: nav}"></nav>
 		<div id="content" class="p-4 p-md-5 pt-5">
 			<h2 class="mb-2">Editar - <span th:text="${usuario.nome}"></span></h2>
-			<label th:if="${usuario.premium == false && usuario.tipoPessoa.descricao == 'Mestre Cervejeiro'}" class="mb-3"><strong>Tipo de Conta: Gratuito</strong><a th:href="@{'https://wa.me/5538988499084?text=Gostaria%20de%20solicitar%20a%20versão%20premium!%0ANome:%20'+ ${usuario.nome} + '%0AE-mail:%20' + ${usuario.email}}" target="_blank"> Solicitar versão premium</a></label>
+			<label th:if="${usuario.premium == false && usuario.tipoPessoa.descricao == 'Mestre Cervejeiro'}" class="mb-3"><strong>Tipo de Conta: Gratuito</strong><a th:href="@{'https://wa.me/<seutelefone>?text=Gostaria%20de%20solicitar%20a%20versão%20premium!%0ANome:%20'+ ${usuario.nome} + '%0AE-mail:%20' + ${usuario.email}}" target="_blank"> Solicitar versão premium</a></label>
 			<label th:if="${usuario.premium == true && usuario.tipoPessoa.descricao == 'Mestre Cervejeiro'}" class="mb-3"><strong>Tipo de Conta: Premium</strong></label>
 			<form th:action="@{'/usuario/editar/' + ${usuarioId}}" th:object="${usuarioDTO}" method="post"
 				class="p-3 p-md-4 pt-3">
